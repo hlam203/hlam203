@@ -1,59 +1,69 @@
-import { motion } from "motion/react";
+import { motion, useScroll } from "motion/react";
 import { ArrowDown, Calendar, Mail, Phone, User } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function App() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ container: containerRef });
+  
   const experiences = [
     {
-      year: "2024",
-      title: "Senior Software Engineer",
-      company: "InnovateTech",
-      desc: "Dẫn dắt đội ngũ kỹ sư phát triển nền tảng quản lý dữ liệu quy mô lớn. Tối ưu hóa kiến trúc microservices và cải thiện hiệu năng hệ thống lên 40%.",
-      skills: ["React", "TypeScript", "Node.js", "System Architecture"]
-    },
-    {
       year: "2022",
-      title: "Fullstack Developer",
-      company: "Creative Solutions Group",
-      desc: "Xây dựng các sản phẩm số từ những ý tưởng ban đầu đến khi hoàn thành. Tích hợp cổng thanh toán và phát triển ứng dụng di động đa nền tảng.",
-      skills: ["React Native", "Next.js", "PostgreSQL", "AWS"]
+      title: "Manager",
+      company: "Lamensa Coffee",
+      desc: "Quản lý toàn bộ hoạt động vận hành của quán cà phê: từ điều phối nhân sự, kiểm soát chi phí – doanh thu đến duy trì chất lượng dịch vụ và đồ uống. Có kinh nghiệm trong đào tạo nhân viên, lập kế hoạch kinh doanh và xử lý tình huống phát sinh hiệu quả.",
+      skills: ["Điều phối nhân sự", "Kiểm soát chi phí", "Đào tạo nghiệp vụ", "Xử lý tình huống"]
     },
     {
-      year: "2020",
-      title: "Frontend Engineer",
-      company: "Digital Edge Agency",
-      desc: "Làm việc chặt chẽ cùng các nhà thiết kế để tạo ra các giao diện người dùng mượt mà, sống động. Nâng cao khả năng tiếp cận (Accessibility) cho hàng loạt website.",
-      skills: ["Vue.js", "Tailwind CSS", "Figma", "Animation"]
+      year: "2023",
+      title: "Barista",
+      company: "The Coffee House",
+      desc: "Có trách nhiệm pha chế các loại đồ uống cà phê và trà theo tiêu chuẩn của quán, đảm bảo chất lượng và thẩm mỹ. Đồng thời phục vụ khách hàng, giữ gìn vệ sinh khu vực làm việc và phối hợp với đội nhóm để mang lại trải nghiệm tốt nhất cho khách.",
+      skills: ["Pha chế", "Tiêu chuẩn đồ uống", "Làm việc nhóm", "Dịch vụ khách hàng"]
     },
     {
-      year: "2018",
-      title: "Web Developer Intern",
-      company: "Tech Start Studio",
-      desc: "Bắt đầu hành trình với vai trò thực tập sinh, tham gia bảo trì và sửa lỗi cho các dự án web hiện có. Xây dựng các trang web tĩnh tốc độ cao.",
-      skills: ["HTML5", "CSS3", "JavaScript", "PHP"]
+      year: "2024",
+      title: "Leader",
+      company: "VIETAROMA Coffee",
+      desc: "Chịu trách nhiệm điều hành hoạt động của quán trong ca làm việc, giám sát nhân viên, đảm bảo chất lượng phục vụ và vận hành trơn tru. Có khả năng giải quyết tình huống, xử lý khiếu nại khách hàng và đào tạo nhân sự mới hiệu quả.",
+      skills: ["Điều hành ca", "Giám sát nhân viên", "Xử lý khiếu nại", "Đào tạo nhân sự"]
+    },
+    {
+      year: "2025",
+      title: "Leader",
+      company: "Black Clover Coffee",
+      desc: "Chịu trách nhiệm điều hành hoạt động của quán trong ca làm việc, giám sát nhân viên, đảm bảo chất lượng phục vụ và vận hành trơn tru. Có khả năng giải quyết tình huống, xử lý khiếu nại khách hàng và đào tạo nhân sự mới hiệu quả.",
+      skills: ["Điều hành ca", "Giám sát nhân viên", "Xử lý khiếu nại", "Đào tạo nhân sự"]
+    },
+    {
+      year: "2026",
+      title: "Barista",
+      company: "Xèng Coffee",
+      desc: "Có trách nhiệm pha chế các loại đồ uống cà phê và trà theo tiêu chuẩn của quán, đảm bảo chất lượng và thẩm mỹ. Đồng thời phục vụ khách hàng, giữ gìn vệ sinh khu vực làm việc và phối hợp với đội nhóm để mang lại trải nghiệm tốt nhất cho khách.",
+      skills: ["Pha chế", "Tiêu chuẩn đồ uống", "Làm việc nhóm", "Dịch vụ khách hàng"]
     }
   ];
 
   const skillsList = [
-    { category: "Chuyên môn Pha chế", items: ["Latte Art", "Espresso / Machine Operation", "Pour Over & Cold Brew", "Sáng tạo thức uống"] },
-    { category: "Vận hành & Quản lý", items: ["Quản lý kho nguyên liệu", "Tính Cost / Định lượng", "Đào tạo nhân sự Barista", "Quy trình vận hành quầy bar"] },
+    { category: "Chuyên môn Pha chế", items: ["Pha chế đồ uống (cà phê máy, trà sữa…)", "Latte Art cơ bản"] },
+    { category: "Vận hành & Quản lý", items: ["Quản lý ca làm, phân công nhân viên", "Kiểm kê nguyên vật liệu", "Hỗ trợ quản lý vận hành quán"] },
     { category: "Kỹ năng mềm", items: ["Dịch vụ khách hàng", "Xử lý tình huống", "Làm việc nhóm", "Kỹ năng giao tiếp"] }
   ];
 
   return (
-    <div className="h-[100dvh] w-full bg-background text-foreground overflow-y-auto snap-y snap-mandatory scroll-smooth no-scrollbar font-sans relative">
+    <div ref={containerRef} className="h-[100dvh] w-full bg-background text-foreground overflow-y-auto snap-y snap-mandatory scroll-smooth no-scrollbar font-sans relative">
       {/* Background Video */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
+      <div className="fixed inset-0 z-0 pointer-events-none bg-[#110A06] overflow-hidden">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover"
-          src="/bg-video.mp4"
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/bg-coffee.mp4"
         />
-        {/* Fallback overlay to darken the background slightly to ensure text is readable */}
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
+        {/* Subtle noise overlay and darken to ensure text readability */}
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-10" />
       </div>
 
       <div className="relative z-10 flex flex-col w-full h-full">
@@ -71,11 +81,11 @@ export default function App() {
             className="max-w-4xl mx-auto flex flex-col items-center text-center gap-4 sm:gap-8 w-full"
           >
             <div className="shrink-0 rounded-full overflow-hidden w-24 h-24 sm:w-40 sm:h-40 md:w-48 md:h-48 border border-white/20 shadow-2xl">
-              <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=400&auto=format&fit=crop" alt="Avatar" className="w-full h-full object-cover" />
+              <img src="https://static.topcv.vn/avatars/ldEhiI76KiwD7XyuLVPg_697604f264da3_cvtpl.jpg" alt="Avatar" className="w-full h-full object-cover" />
             </div>
 
             <div className="flex flex-col items-center w-full">
-              <h1 className="font-display font-normal text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight sm:leading-[0.95] tracking-tight sm:tracking-[-2px] text-white">
+              <h1 className="font-['Courier_New'] font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight sm:leading-[0.95] tracking-tight sm:tracking-[-2px] text-white">
                 Vũ Hoàng Lâm
               </h1>
               <h2 className="text-[11px] sm:text-lg md:text-xl md:text-2xl text-white/70 mt-1 sm:mt-4 font-light uppercase tracking-widest sm:tracking-[0.2em]">
@@ -127,7 +137,7 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8 }}
               viewport={{ once: false, amount: 0.3 }}
-              className="font-display italic font-normal text-3xl sm:text-5xl md:text-6xl text-white mb-8 sm:mb-16 tracking-tight text-center"
+              className="font-['Georgia'] italic font-bold text-[29px] text-white mb-8 sm:mb-16 tracking-tight text-center"
             >
               Kỹ năng & Chuyên môn
             </motion.h2>
@@ -187,7 +197,7 @@ export default function App() {
                 <span className="font-display font-normal text-5xl sm:text-7xl xl:text-9xl text-white drop-shadow-2xl leading-none tracking-tight sm:tracking-[-2px]">
                   {exp.year}
                 </span>
-                <h3 className="text-xs sm:text-base md:text-lg mt-1.5 md:mt-4 font-light text-white/80 tracking-widest sm:tracking-[0.2em] uppercase">
+                <h3 className="text-xs sm:text-base md:text-lg mt-1.5 md:mt-4 font-light text-white/80 tracking-widest sm:tracking-[0.2em] uppercase transition-all duration-500 hover:text-white hover:-translate-y-1 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] cursor-default">
                   {exp.company}
                 </h3>
               </motion.div>
@@ -199,17 +209,17 @@ export default function App() {
                 viewport={{ once: false, amount: 0.5 }}
                 className="md:col-span-8 lg:col-span-7 flex flex-col justify-center items-start border-l-[1px] md:border-l-0 border-white/20 pl-5 md:pl-0 pb-6 md:pb-0 pt-4 md:pt-0 h-full md:h-auto"
               >
-                <h2 className="text-xl sm:text-3xl md:text-4xl xl:text-5xl text-white mb-2 sm:mb-6 font-display italic tracking-tight">
+                <h2 className="text-xl sm:text-3xl md:text-4xl xl:text-5xl text-white mb-2 sm:mb-6 font-display italic tracking-tight transition-all duration-500 hover:-translate-y-1 hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] cursor-default">
                   {exp.title}
                 </h2>
-                <p className="text-xs sm:text-sm md:text-lg text-white/70 leading-relaxed mb-4 sm:mb-10 max-w-xl font-light text-justify sm:text-left">
+                <p className="text-xs sm:text-sm md:text-lg text-white/70 leading-relaxed mb-4 sm:mb-10 max-w-xl font-light text-justify sm:text-left transition-all duration-500 hover:text-white hover:-translate-y-1 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] cursor-default">
                   {exp.desc}
                 </p>
                 <div className="flex flex-wrap gap-1.5 sm:gap-2 md:gap-3">
                   {exp.skills.map((skill, i) => (
                     <span 
                       key={i} 
-                      className="px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[9px] sm:text-xs tracking-wider sm:tracking-widest uppercase text-white/90 bg-white/5 border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-sm"
+                      className="px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[9px] sm:text-xs tracking-wider sm:tracking-widest uppercase text-white/90 bg-white/5 border border-white/10 hover:bg-white/20 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:text-white transition-all duration-500 backdrop-blur-sm cursor-default"
                     >
                       {skill}
                     </span>
@@ -234,11 +244,11 @@ export default function App() {
             viewport={{ once: false, amount: 0.5 }}
             className="max-w-3xl mx-auto flex flex-col items-center w-full"
           >
-            <h2 className="font-display font-normal text-3xl sm:text-5xl md:text-7xl text-white leading-tight sm:leading-[0.95] tracking-tight sm:tracking-[-1px] mb-4 sm:mb-8">
-              Bắt đầu hành trình mới?
+            <h2 className="font-display font-normal text-3xl sm:text-5xl md:text-7xl text-white leading-tight sm:leading-[0.95] tracking-tight sm:tracking-[-1px] mb-4 sm:mb-8 text-center">
+              Sẵn sàng đồng hành cùng nhau?
             </h2>
-            <p className="text-xs sm:text-base md:text-lg text-white/70 mb-8 sm:mb-12 max-w-xs sm:max-w-md font-light">
-              Liên hệ với tôi để cùng nhau xây dựng những sản phẩm công nghệ tuyệt đỉnh.
+            <p className="text-xs sm:text-base md:text-lg text-white/70 mb-8 sm:mb-12 max-w-sm text-center sm:max-w-md font-light leading-relaxed">
+              Cảm ơn bạn đã dành thời gian xem hồ sơ của tôi. Với kinh nghiệm quản lý và pha chế, tôi rất mong có cơ hội được làm việc và đóng góp giá trị cho đội ngũ của bạn.
             </p>
           </motion.div>
           <div className="absolute bottom-6 text-white/30 text-[9px] sm:text-xs tracking-widest sm:tracking-[0.2em] uppercase font-sans">
