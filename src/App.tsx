@@ -60,7 +60,7 @@ export default function App() {
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
-          src="/bg-coffee.mp4"
+          src="/bg-coffee-2.mp4"
         />
         {/* Subtle noise overlay and darken to ensure text readability */}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-10" />
